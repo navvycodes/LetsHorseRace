@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="440" viewBox="0 0 300 440">
+  <rect width="300" height="440" rx="20" ry="20" fill="white" stroke="black" stroke-width="4"/>
+
+  <!-- Top-left A and diamond -->
+  <text x="30" y="60" font-family="Georgia, serif" font-size="36" fill="red" text-anchor="middle">A</text>
+  <polygon points="30,75 42,95 30,115 18,95" fill="red"/>
+
+  <!-- Bottom-right A and diamond (rotated) -->
+  <g transform="rotate(180, 150, 220)">
+    <text x="30" y="60" font-family="Georgia, serif" font-size="36" fill="red" text-anchor="middle">A</text>
+    <polygon points="30,75 42,95 30,115 18,95" fill="red"/>
+  </g>
+
+  <!-- Center diamond -->
+  <polygon points="150,190 180,230 150,270 120,230" fill="red"/>
+</svg>
