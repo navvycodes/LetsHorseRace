@@ -34,6 +34,7 @@ export const Home = () => {
           mb: 3,
           fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3rem" },
           fontWeight: 500,
+          fontFamily: "'Playfair Display', serif",
         }}
       >
         Let's Horse Race
