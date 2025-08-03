@@ -4,7 +4,6 @@ import { HorseRacingStateProvider } from "./State/HorseRacingLocalContextProvide
 
 const LocalPlay = () => {
   const currentState = useCurrentState();
-  console.log("Current State:", currentState);
 
   if (currentState === "setup") {
     return <AddPlayersScreen />;

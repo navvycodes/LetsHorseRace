@@ -6,9 +6,11 @@ import type { PlayerRecord } from "../../State/utils/types";
 export const PlayerBox = ({
   player,
   index,
+  handleRemovePlayer,
 }: {
   player: PlayerRecord;
   index: number | undefined;
+  handleRemovePlayer: (index: number) => void;
 }) => {
   return (
     <Box
@@ -52,7 +54,10 @@ export const PlayerBox = ({
           aria-label="delete"
           color="error"
           onClick={() => {
-            console.log("Delete player", index);
+            if (index !== undefined) {
+              console.log("Remove player", index); // Debug log
+              handleRemovePlayer(index);
+            }
           }}
           sx={{ color: "#F0F0F0" }} // light color for icon
         >

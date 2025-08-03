@@ -6,11 +6,13 @@ import type { PlayerRecord } from "../../State/utils/types";
 import { AddPlayerDialog } from "./AddPlayerDialog";
 import { PlayerAndBetDisplay } from "./PlayerAndBetDisplay";
 import { useStartRace } from "../../State/hooks/useStartRace";
+import { useRemovePlayer } from "../../State/hooks/useRemovePlayer";
 
 export const AddPlayersScreen = () => {
   const players = usePlayers();
   const startRace = useStartRace();
   const addNewPlayer = useAddNewPlayer();
+  const removePlayer = useRemovePlayer();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -21,6 +23,9 @@ export const AddPlayersScreen = () => {
   const handleAddPlayer = (player: PlayerRecord) => {
     addNewPlayer(player);
     handleClose();
+  };
+  const handleRemovePlayer = (index: number) => {
+    removePlayer(index);
   };
 
   return (
@@ -42,7 +47,10 @@ export const AddPlayersScreen = () => {
         >
           Players
         </Typography>
-        <PlayerAndBetDisplay players={players} />
+        <PlayerAndBetDisplay
+          players={players}
+          handleRemovePlayer={handleRemovePlayer}
+        />
         <Button
           variant="contained"
           fullWidth

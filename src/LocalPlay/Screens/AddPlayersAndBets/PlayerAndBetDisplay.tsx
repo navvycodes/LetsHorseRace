@@ -5,8 +5,10 @@ import { PlayerBox } from "./PlayerBox";
 
 export const PlayerAndBetDisplay = ({
   players,
+  handleRemovePlayer,
 }: {
   players: PlayerRecord[];
+  handleRemovePlayer: (index: number) => void;
 }) => {
   return (
     <Stack sx={{ overflowY: "auto", overflowX: "hidden", maxHeight: "60vh" }}>
@@ -16,7 +18,12 @@ export const PlayerAndBetDisplay = ({
         </Typography>
       )}
       {players.map((player, index) => (
-        <PlayerBox key={index} player={player} index={index} />
+        <PlayerBox
+          key={index}
+          player={player}
+          index={index}
+          handleRemovePlayer={handleRemovePlayer}
+        />
       ))}
     </Stack>
   );

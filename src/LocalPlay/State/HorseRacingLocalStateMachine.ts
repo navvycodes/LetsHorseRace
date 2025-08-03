@@ -10,33 +10,41 @@ export const HorseRacingLocalStateMachine = setup({
     logSetup: ({ context }) => {
       console.log("Entering setup with players:", context.players);
     },
+    removePlayer: assign({
+      players: ({ context, event }) => {
+        if (event.type !== "REMOVE_PLAYER") return context.players;
+        const index = event.index;
+        if (index < 0 || index >= context.players.length) {
+          console.warn("Invalid player index:", index);
+          return context.players;
+        }
+        return context.players.filter((_, i) => i !== index);
+      },
+    }),
     addPlayer: assign({
       players: ({ context, event }) => {
-        console.log("Adding player:", event);
         if (event.type !== "ADD_PLAYER") return context.players;
         const newPlayer = event.player;
+        if (
+          !newPlayer ||
+          !newPlayer.playerName ||
+          !newPlayer.betSize ||
+          !newPlayer.betType ||
+          !newPlayer.betSuit
+        ) {
+          console.warn("Invalid player data:", newPlayer);
+          return context.players;
+        }
         return [...context.players, newPlayer];
       },
     }),
   },
   guards: {
     hasPlayersAndEveryoneHasBet: ({ context }) => {
-      console.log("Checking if all players have bets:", context.players);
       if (!Array.isArray(context.players) || context.players.length === 0) {
         console.warn("No players found or players array is not an array.");
         return false;
       }
-      // console.log(
-      //   "jnjs",
-      //   context.players.every(
-      //     (player) =>
-      //       player.playerName?.trim() &&
-      //       typeof player.betSize === "number" &&
-      //       player.betSize > 0 &&
-      //       !!player.betType &&
-      //       !!player.betSuit
-      //   )
-      // );
       return context.players.every(
         (player) =>
           player.playerName?.trim() &&
@@ -46,10 +54,6 @@ export const HorseRacingLocalStateMachine = setup({
           !!player.betSuit
       );
     },
-
-    // hasPlayers: ({ context }) => context.players.length > 0,
-    // allPlayersBet: ({ context }) =>
-    //   context.players.every((p) => p.bet !== null),
   },
 }).createMachine({
   id: "HorseRacingLocal",
@@ -72,6 +76,9 @@ export const HorseRacingLocalStateMachine = setup({
     setup: {
       entry: "logSetup",
       on: {
+        REMOVE_PLAYER: {
+          actions: "removePlayer",
+        },
         ADD_PLAYER: {
           actions: "addPlayer",
         },
@@ -90,7 +97,7 @@ export const HorseRacingLocalStateMachine = setup({
       ],
       on: {
         FLIP_CARD: {
-          target: "results", // placeholder
+          target: "results",
         },
       },
     },
