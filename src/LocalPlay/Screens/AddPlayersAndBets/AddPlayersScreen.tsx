@@ -5,9 +5,11 @@ import { usePlayers } from "../../State/hooks/usePlayers";
 import type { PlayerRecord } from "../../State/utils/types";
 import { AddPlayerDialog } from "./AddPlayerDialog";
 import { PlayerAndBetDisplay } from "./PlayerAndBetDisplay";
+import { useStartRace } from "../../State/hooks/useStartRace";
 
 export const AddPlayersScreen = () => {
   const players = usePlayers();
+  const startRace = useStartRace();
   const addNewPlayer = useAddNewPlayer();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -68,7 +70,14 @@ export const AddPlayersScreen = () => {
           ➕ Add Player
         </Button>
 
-        <Button variant="contained" color="primary" sx={{ mb: 2 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ mb: 2 }}
+          onClick={() => {
+            startRace();
+          }}
+        >
           Start Game
         </Button>
       </Stack>

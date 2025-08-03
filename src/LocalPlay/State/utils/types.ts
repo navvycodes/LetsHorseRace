@@ -59,8 +59,6 @@ export type HorseRacingGameContext = {
 
 export type GameEvent =
   | { type: "ADD_PLAYER"; player: PlayerRecord }
-  | { type: "SET_BET"; name: string; bet: Card["suit"] }
-  | { type: "START_BETTING" }
   | { type: "START_RACE" }
   | { type: "FLIP_CARD" }
   | { type: "RESTART" };

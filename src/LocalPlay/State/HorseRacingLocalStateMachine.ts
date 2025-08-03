@@ -18,16 +18,35 @@ export const HorseRacingLocalStateMachine = setup({
         return [...context.players, newPlayer];
       },
     }),
-    // setBet: assign({
-    //   players: ({ context, event }) => {
-    //     if (event.type !== "SET_BET") return context.players;
-    //     return context.players.map((p) =>
-    //       p.name === event.name ? { ...p, bet: event.bet } : p
-    //     );
-    //   },
-    // }),
   },
   guards: {
+    hasPlayersAndEveryoneHasBet: ({ context }) => {
+      console.log("Checking if all players have bets:", context.players);
+      if (!Array.isArray(context.players) || context.players.length === 0) {
+        console.warn("No players found or players array is not an array.");
+        return false;
+      }
+      // console.log(
+      //   "jnjs",
+      //   context.players.every(
+      //     (player) =>
+      //       player.playerName?.trim() &&
+      //       typeof player.betSize === "number" &&
+      //       player.betSize > 0 &&
+      //       !!player.betType &&
+      //       !!player.betSuit
+      //   )
+      // );
+      return context.players.every(
+        (player) =>
+          player.playerName?.trim() &&
+          typeof player.betSize === "number" &&
+          player.betSize > 0 &&
+          !!player.betType &&
+          !!player.betSuit
+      );
+    },
+
     // hasPlayers: ({ context }) => context.players.length > 0,
     // allPlayersBet: ({ context }) =>
     //   context.players.every((p) => p.bet !== null),
@@ -56,24 +75,19 @@ export const HorseRacingLocalStateMachine = setup({
         ADD_PLAYER: {
           actions: "addPlayer",
         },
-        // START_BETTING: {
-        //   guard: "hasPlayers",
-        //   target: "betting",
-        // },
-      },
-    },
-    betting: {
-      on: {
-        // SET_BET: {
-        //   actions: "setBet",
-        // },
-        // START_RACE: {
-        //   guard: "allPlayersBet",
-        //   target: "racing",
-        // },
+        START_RACE: {
+          guard: "hasPlayersAndEveryoneHasBet",
+          target: "racing",
+        },
       },
     },
     racing: {
+      entry: [
+        () => {
+          console.log("Starting race...");
+          console.log("IM IN RACING STATE");
+        },
+      ],
       on: {
         FLIP_CARD: {
           target: "results", // placeholder

@@ -1,10 +1,9 @@
 import { AddPlayersScreen } from "./Screens/AddPlayersAndBets/AddPlayersScreen";
-import { useLocalHorseRacingActor } from "./State/hooks/useHorseRacingActor";
+import { useCurrentState } from "./State/hooks/useCurrentState";
 import { HorseRacingStateProvider } from "./State/HorseRacingLocalContextProvider";
 
 const LocalPlay = () => {
-  const actor = useLocalHorseRacingActor();
-  const currentState = actor.getSnapshot().value;
+  const currentState = useCurrentState();
   console.log("Current State:", currentState);
 
   if (currentState === "setup") {
