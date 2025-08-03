@@ -1,0 +1,23 @@
+import { Stack, Typography } from "@mui/material";
+
+import type { PlayerRecord } from "../../State/utils/types";
+import { PlayerBox } from "./PlayerBox";
+
+export const PlayerAndBetDisplay = ({
+  players,
+}: {
+  players: PlayerRecord[];
+}) => {
+  return (
+    <Stack sx={{ overflowY: "auto", overflowX: "hidden", maxHeight: "60vh" }}>
+      {players.length === 0 && (
+        <Typography sx={{ color: "#B0B0B0" }}>
+          No players added yet. Click "Add Player" to start.
+        </Typography>
+      )}
+      {players.map((player, index) => (
+        <PlayerBox key={index} player={player} index={index} />
+      ))}
+    </Stack>
+  );
+};

@@ -1,8 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
 import CloudIcon from "@mui/icons-material/Cloud";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import { useNavigate } from "react-router";
 
 export const Home = () => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -54,6 +56,9 @@ export const Home = () => {
             "&:hover": {
               backgroundColor: "#2563EB",
             },
+          }}
+          onClick={() => {
+            navigate("/local-play");
           }}
         >
           Local Play
