@@ -1,5 +1,6 @@
 import { setup, assign } from "xstate";
 import type { GameEvent, HorseRacingGameContext } from "./utils/types";
+import { generateDeck } from "./utils/generateDeck";
 
 export const HorseRacingLocalStateMachine = setup({
   types: {
@@ -7,9 +8,47 @@ export const HorseRacingLocalStateMachine = setup({
     events: {} as GameEvent,
   },
   actions: {
-    logSetup: ({ context }) => {
-      console.log("Entering setup with players:", context.players);
-    },
+    flipALeg: assign(({ context }) => {
+      const { legs, minHorsePosition } = context;
+      if (legs.length === 0) {
+        console.warn("No more legs to flip.");
+        return context;
+      }
+      const nextLeg = legs[0];
+      const horseStates = { ...context.horseStates };
+      if (nextLeg.suit in horseStates) {
+        horseStates[nextLeg.suit] += -1;
+      }
+      return {
+        minHorsePosition: minHorsePosition + 1,
+        legs: legs.slice(1),
+        horseStates: horseStates,
+        currentLegCard: nextLeg,
+      };
+    }),
+    flipACard: assign(({ context }) => {
+      const { deck } = context;
+      console.log("Flipping a card from the deck:", deck);
+      if (deck.length === 0) {
+        console.warn("No cards left in the deck to flip.");
+        return context;
+      }
+      const currentCard = deck.shift();
+      if (!currentCard) {
+        console.warn("No card was flipped, deck might be empty.");
+        return context;
+      }
+      const horseStates = { ...context.horseStates };
+      if (currentCard.suit in horseStates) {
+        horseStates[currentCard.suit] += 1;
+      } else {
+        console.warn(`Unknown suit: ${currentCard.suit}`);
+      }
+      return {
+        currentCard: currentCard,
+        horseStates: horseStates,
+      };
+    }),
     removePlayer: assign({
       players: ({ context, event }) => {
         if (event.type !== "REMOVE_PLAYER") return context.players;
@@ -38,7 +77,18 @@ export const HorseRacingLocalStateMachine = setup({
         return [...context.players, newPlayer];
       },
     }),
+    shuffleDeckAndDeal: assign(({ context }) => {
+      const deck = generateDeck(1);
+      const legs = deck.slice(0, context.maxHorsePosition);
+      deck.splice(0, context.maxHorsePosition);
+      return {
+        deck,
+        legs,
+        currentLeg: 0,
+      };
+    }),
   },
+
   guards: {
     hasPlayersAndEveryoneHasBet: ({ context }) => {
       if (!Array.isArray(context.players) || context.players.length === 0) {
@@ -54,6 +104,17 @@ export const HorseRacingLocalStateMachine = setup({
           !!player.betSuit
       );
     },
+    allHorsesReachedMinPosition: ({ context }) => {
+      return Object.values(context.horseStates).every(
+        (position) => position >= context.minHorsePosition
+      );
+    },
+    hasWinner: ({ context }) => {
+      // Example: check if any horse has reached max position
+      return Object.values(context.horseStates).some(
+        (pos) => pos >= context.maxHorsePosition
+      );
+    },
   },
 }).createMachine({
   id: "HorseRacingLocal",
@@ -61,6 +122,7 @@ export const HorseRacingLocalStateMachine = setup({
   context: {
     players: [],
     currentCard: null,
+    currentLegCard: null,
     horseStates: {
       Hearts: 0,
       Spades: 0,
@@ -70,11 +132,12 @@ export const HorseRacingLocalStateMachine = setup({
     deck: [],
     legs: [],
     currentLeg: 0,
-    maxHorsePosition: 6,
+    maxHorsePosition: 8,
+    minHorsePosition: 1,
   },
   states: {
     setup: {
-      entry: "logSetup",
+      entry: "shuffleDeckAndDeal",
       on: {
         REMOVE_PLAYER: {
           actions: "removePlayer",
@@ -89,15 +152,41 @@ export const HorseRacingLocalStateMachine = setup({
       },
     },
     racing: {
-      entry: [
-        () => {
-          console.log("Starting race...");
-          console.log("IM IN RACING STATE");
+      entry: [],
+      initial: "racing",
+      states: {
+        racing: {
+          on: {
+            FLIP_CARD: {
+              actions: "flipACard",
+              target: "checkLeg",
+            },
+          },
         },
-      ],
-      on: {
-        FLIP_CARD: {
-          target: "results",
+
+        checkLeg: {
+          always: [
+            {
+              guard: "allHorsesReachedMinPosition",
+              target: "flipLeg",
+            },
+            { target: "checkWinner" },
+          ],
+        },
+
+        flipLeg: {
+          entry: "flipALeg",
+          always: "checkWinner",
+        },
+
+        checkWinner: {
+          always: [
+            {
+              guard: "hasWinner",
+              target: "#HorseRacingLocal.results",
+            },
+            { target: "racing" },
+          ],
         },
       },
     },

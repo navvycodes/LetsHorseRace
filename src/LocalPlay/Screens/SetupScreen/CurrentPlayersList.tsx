@@ -3,7 +3,7 @@ import { Stack, Typography } from "@mui/material";
 import type { PlayerRecord } from "../../State/utils/types";
 import { PlayerBox } from "./PlayerBox";
 
-export const PlayerAndBetDisplay = ({
+export const CurrentPlayersList = ({
   players,
   handleRemovePlayer,
 }: {

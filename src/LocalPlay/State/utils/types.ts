@@ -50,10 +50,12 @@ export interface HorseState {
 export type HorseRacingGameContext = {
   players: PlayerRecord[];
   currentCard: Card | null;
+  currentLegCard: Card | null;
   horseStates: HorseState;
   deck: Card[];
   legs: Card[];
   currentLeg: number;
+  minHorsePosition: number;
   maxHorsePosition: number;
 };
 

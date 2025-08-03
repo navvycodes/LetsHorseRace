@@ -4,11 +4,11 @@ import { useAddNewPlayer } from "../../State/hooks/useAddNewPlayer";
 import { usePlayers } from "../../State/hooks/usePlayers";
 import type { PlayerRecord } from "../../State/utils/types";
 import { AddPlayerDialog } from "./AddPlayerDialog";
-import { PlayerAndBetDisplay } from "./PlayerAndBetDisplay";
+import { CurrentPlayersList } from "./CurrentPlayersList";
 import { useStartRace } from "../../State/hooks/useStartRace";
 import { useRemovePlayer } from "../../State/hooks/useRemovePlayer";
 
-export const AddPlayersScreen = () => {
+export const SetupScreen = () => {
   const players = usePlayers();
   const startRace = useStartRace();
   const addNewPlayer = useAddNewPlayer();
@@ -47,7 +47,7 @@ export const AddPlayersScreen = () => {
         >
           Players
         </Typography>
-        <PlayerAndBetDisplay
+        <CurrentPlayersList
           players={players}
           handleRemovePlayer={handleRemovePlayer}
         />
