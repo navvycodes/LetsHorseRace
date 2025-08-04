@@ -1,6 +1,7 @@
 import { Home } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
+import { AdBanner } from "../Ads/AdBanner";
 
 export const Disclaimer = () => {
   const navigate = useNavigate();
@@ -83,6 +84,10 @@ export const Disclaimer = () => {
       >
         V 1.0.0
       </Typography>
+
+      <Box sx={{ mt: 4, px: 2 }}>
+        <AdBanner />
+      </Box>
     </Box>
   );
 };

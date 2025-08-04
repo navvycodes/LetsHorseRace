@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import CloudIcon from "@mui/icons-material/Cloud";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import { Link, useNavigate } from "react-router";
+import { AdBanner } from "../Ads/AdBanner";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -90,6 +91,10 @@ export const Home = () => {
       >
         V 1.0.0
       </Typography>
+
+      <Box sx={{ mt: 4, px: 2 }}>
+        <AdBanner />
+      </Box>
       <Typography
         variant="caption"
         sx={{ mt: 4, color: "gray", textAlign: "center", mb: 4 }}
