@@ -212,7 +212,7 @@ export const RacingScreen = () => {
                 />
                 <Typography variant="body2">
                   <strong>
-                    All cards have hit position {minHorsePosition + 1}
+                    All cards have hit position {minHorsePosition}
                   </strong>
                   <br />
                   <strong>{currentLegCard.rank.toUpperCase()}</strong> of{" "}
