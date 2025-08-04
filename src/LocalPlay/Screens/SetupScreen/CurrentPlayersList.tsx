@@ -6,9 +6,11 @@ import { PlayerBox } from "./PlayerBox";
 export const CurrentPlayersList = ({
   players,
   handleRemovePlayer,
+  handleEditPlayer,
 }: {
   players: PlayerRecord[];
   handleRemovePlayer: (index: number) => void;
+  handleEditPlayer: (index: number) => void;
 }) => {
   return (
     <Stack
@@ -34,6 +36,7 @@ export const CurrentPlayersList = ({
           player={player}
           index={index}
           handleRemovePlayer={handleRemovePlayer}
+          handleEditPlayer={handleEditPlayer}
         />
       ))}
     </Stack>

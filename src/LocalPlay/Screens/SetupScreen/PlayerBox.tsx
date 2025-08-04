@@ -7,10 +7,12 @@ export const PlayerBox = ({
   player,
   index,
   handleRemovePlayer,
+  handleEditPlayer,
 }: {
   player: PlayerRecord;
   index: number | undefined;
   handleRemovePlayer: (index: number) => void;
+  handleEditPlayer: (index: number) => void;
 }) => {
   return (
     <Box
@@ -21,10 +23,10 @@ export const PlayerBox = ({
         mb: 1,
         flexShrink: 1,
         borderRadius: 2,
-        backgroundColor: "#2F2F2F", // slightly lighter than background
-        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.4)", // subtle shadow
-        border: "1px solid #3A3A3A", // soft border for definition
-        color: "#F0F0F0", // light text for readability
+        backgroundColor: "#2F2F2F",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.4)",
+        border: "1px solid #3A3A3A",
+        color: "#F0F0F0",
       }}
     >
       <Stack maxWidth={"60%"}>
@@ -45,9 +47,11 @@ export const PlayerBox = ({
           edge="end"
           aria-label="edit"
           onClick={() => {
-            console.log("Edit player", index);
+            if (index !== undefined) {
+              handleEditPlayer(index);
+            }
           }}
-          sx={{ color: "#F0F0F0" }} // light color for icon
+          sx={{ color: "#F0F0F0" }}
         >
           <EditIcon />
         </IconButton>
@@ -57,11 +61,10 @@ export const PlayerBox = ({
           color="error"
           onClick={() => {
             if (index !== undefined) {
-              console.log("Remove player", index); // Debug log
               handleRemovePlayer(index);
             }
           }}
-          sx={{ color: "#F0F0F0" }} // light color for icon
+          sx={{ color: "#F0F0F0" }}
         >
           <DeleteIcon />
         </IconButton>

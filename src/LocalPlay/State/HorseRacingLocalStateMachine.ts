@@ -60,6 +60,29 @@ export const HorseRacingLocalStateMachine = setup({
         return context.players.filter((_, i) => i !== index);
       },
     }),
+    updatePlayer: assign({
+      players: ({ context, event }) => {
+        if (event.type !== "UPDATE_PLAYER") return context.players;
+        const { player, index } = event;
+        if (
+          !player ||
+          !player.playerName ||
+          !player.betSize ||
+          !player.betType ||
+          !player.betSuit
+        ) {
+          console.warn("Invalid player data:", player);
+          return context.players;
+        }
+        if (index < 0 || index >= context.players.length) {
+          console.warn("Invalid player index:", index);
+          return context.players;
+        }
+        const updatedPlayers = [...context.players];
+        updatedPlayers[index] = player;
+        return updatedPlayers;
+      },
+    }),
     addPlayer: assign({
       players: ({ context, event }) => {
         if (event.type !== "ADD_PLAYER") return context.players;
@@ -139,6 +162,9 @@ export const HorseRacingLocalStateMachine = setup({
     setup: {
       entry: "shuffleDeckAndDeal",
       on: {
+        UPDATE_PLAYER: {
+          actions: "updatePlayer",
+        },
         REMOVE_PLAYER: {
           actions: "removePlayer",
         },

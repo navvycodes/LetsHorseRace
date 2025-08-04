@@ -7,20 +7,42 @@ import { AddPlayerDialog } from "./AddPlayerDialog";
 import { CurrentPlayersList } from "./CurrentPlayersList";
 import { useStartRace } from "../../State/hooks/useStartRace";
 import { useRemovePlayer } from "../../State/hooks/useRemovePlayer";
+import { useUpdateExistingPlayer } from "../../State/hooks/useEditPlayer";
 
 export const SetupScreen = () => {
   const players = usePlayers();
   const startRace = useStartRace();
   const addNewPlayer = useAddNewPlayer();
+  const updateExistingPlayer = useUpdateExistingPlayer();
   const removePlayer = useRemovePlayer();
+
+  const [editIndex, setEditIndex] = React.useState<number | null>(null);
+  const [editPlayer, setEditPlayer] = React.useState<PlayerRecord | null>(null);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleAddPlayer = (player: PlayerRecord) => {
-    addNewPlayer(player);
+  const handleAddPlayer = (player: PlayerRecord, index: number | null) => {
+    if (index !== null) {
+      updateExistingPlayer(player, index);
+      setEditIndex(null);
+      setEditPlayer(null);
+    } else {
+      addNewPlayer(player);
+    }
     handleClose();
   };
+
+  const handleEditPlayer = (index: number) => {
+    if (index < 0 || index >= players.length) return;
+    const player = players[index];
+    if (player) {
+      setEditPlayer(player);
+      setEditIndex(index);
+      handleClickOpen();
+    }
+  };
+
   const handleRemovePlayer = (index: number) => {
     removePlayer(index);
   };
@@ -35,7 +57,6 @@ export const SetupScreen = () => {
         paddingBottom: "80px",
       }}
     >
-      {/* Top Title */}
       <Typography
         variant="h4"
         align="center"
@@ -74,6 +95,7 @@ export const SetupScreen = () => {
           <CurrentPlayersList
             players={players}
             handleRemovePlayer={handleRemovePlayer}
+            handleEditPlayer={handleEditPlayer}
           />
         </Box>
       </Box>
@@ -134,6 +156,8 @@ export const SetupScreen = () => {
         open={open}
         handleClose={handleClose}
         onAddPlayer={handleAddPlayer}
+        editIndex={editIndex}
+        editPlayer={editPlayer}
       />
     </Box>
   );

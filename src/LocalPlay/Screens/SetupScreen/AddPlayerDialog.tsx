@@ -8,7 +8,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   betTypeArray,
   allSuitsArray,
@@ -16,35 +16,49 @@ import {
   type BetType,
   suitIcons,
   betTypeIcons,
+  type PlayerRecord,
 } from "../../State/utils/types";
 
 export const AddPlayerDialog = ({
   open,
   handleClose,
   onAddPlayer,
+  editIndex = null,
+  editPlayer = null,
 }: {
   open: boolean;
   handleClose: () => void;
-  onAddPlayer: (player: {
-    playerName: string;
-    betSize: number;
-    betType: BetType;
-    betSuit: Suit;
-  }) => void;
+  onAddPlayer: (player: PlayerRecord, index: number | null) => void;
+  editPlayer?: PlayerRecord | null;
+  editIndex?: number | null;
 }) => {
   const [playerName, setPlayerName] = useState("");
-  const [betSize, setBetSize] = useState(10);
+  const [betSize, setBetSize] = useState(1);
   const [betType, setBetType] = useState(betTypeArray[0]);
   const [betSuit, setBetSuit] = useState(allSuitsArray[0]);
 
   const handleSubmit = () => {
-    onAddPlayer({ playerName, betSize, betType, betSuit });
+    onAddPlayer({ playerName, betSize, betType, betSuit }, editIndex);
     handleClose();
     setPlayerName("");
-    setBetSize(10);
+    setBetSize(1);
     setBetType(betTypeArray[0]);
     setBetSuit(allSuitsArray[0]);
   };
+
+  useEffect(() => {
+    if (editPlayer) {
+      setPlayerName(editPlayer.playerName);
+      setBetSize(editPlayer.betSize);
+      setBetType(editPlayer.betType);
+      setBetSuit(editPlayer.betSuit);
+    } else {
+      setPlayerName("");
+      setBetSize(1);
+      setBetType(betTypeArray[0]);
+      setBetSuit(allSuitsArray[0]);
+    }
+  }, [editPlayer, open]);
 
   return (
     <Dialog
