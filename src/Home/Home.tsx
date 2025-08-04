@@ -77,6 +77,9 @@ export const Home = () => {
               backgroundColor: "#1F1F1F",
             },
           }}
+          onClick={() => {
+            navigate("/online-play");
+          }}
         >
           Online Play
         </Button>

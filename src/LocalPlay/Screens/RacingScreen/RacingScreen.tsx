@@ -78,7 +78,7 @@ export const RacingScreen = () => {
           width: "100%",
           display: "flex",
           justifyContent: "center",
-          mt: 3,
+          mt: 2,
           flexDirection: "column",
           alignItems: "center",
         }}
@@ -218,7 +218,8 @@ export const RacingScreen = () => {
                   <strong>{currentLegCard.rank.toUpperCase()}</strong> of{" "}
                   <strong>{currentLegCard.suit.toUpperCase()}</strong> flipped
                   <br />
-                  Suit moves <strong>back 1 step!</strong>
+                  {currentLegCard.suit.toUpperCase()} moves{" "}
+                  <strong>back 1 step!</strong>
                 </Typography>
               </Box>
             ) : null

@@ -61,10 +61,11 @@ export const SetupScreen = () => {
         variant="h4"
         align="center"
         sx={{
-          fontWeight: "bold",
           mt: 4,
           mb: 2,
           textShadow: "1px 1px 2px rgba(0,0,0,0.6)",
+          fontWeight: 500,
+          fontFamily: "'Playfair Display', serif",
         }}
       >
         Let's Horse Race (Local Play)

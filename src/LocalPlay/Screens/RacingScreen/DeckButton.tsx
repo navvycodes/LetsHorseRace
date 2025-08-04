@@ -19,8 +19,8 @@ export const DeckButton = ({
       <Box
         onClick={handleCardClick}
         sx={{
-          width: 140,
-          height: 200,
+          width: 110,
+          height: 160,
           position: "relative",
           cursor: "pointer",
           "&:hover": {
@@ -52,7 +52,7 @@ export const DeckButton = ({
         <img
           src={`/svgcards/${currentCard.suit.toLowerCase()}_${currentCard.rank.toLowerCase()}.svg`}
           alt={`${currentCard.rank} of ${currentCard.suit}`}
-          style={{ width: 140, height: 200, objectFit: "contain" }}
+          style={{ width: 110, height: 160, objectFit: "contain" }}
         />
       )}
     </Box>

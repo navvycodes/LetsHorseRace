@@ -10,6 +10,13 @@ const aceCardImages: Record<Suit, string> = {
 
 const horseIcon = "/icons/HorseProgress.svg";
 
+const suitGradients = {
+  hearts: "#FF4C4C, #FF8A80",
+  diamonds: "#FBC02D, #FFF176",
+  clubs: "#00E676, #69F0AE",
+  spades: "#7C4DFF, #B388FF",
+};
+
 export const SuitBox = ({
   suit,
   maxHorsePosition,
@@ -60,11 +67,14 @@ export const SuitBox = ({
               backgroundColor: "#3A3A3A",
               "& .MuiLinearProgress-bar": {
                 borderRadius: 4,
-                backgroundColor: "#00B0FF",
+                backgroundImage: `linear-gradient(90deg, ${
+                  suitGradients[
+                    suit.toLowerCase() as keyof typeof suitGradients
+                  ]
+                })`,
               },
             }}
           />
-          {/* Horse icon over progress */}
           <Box
             component="img"
             src={horseIcon}
@@ -72,10 +82,12 @@ export const SuitBox = ({
             sx={{
               position: "absolute",
               top: -18,
+              transition: "left 0.4s ease-in-out",
+              zIndex: 2,
               left: `${progressPercent}%`,
               transform: "translateX(-50%)",
-              width: 28,
-              height: 28,
+              width: 40,
+              height: 40,
             }}
           />
         </Box>
