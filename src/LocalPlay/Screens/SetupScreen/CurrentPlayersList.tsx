@@ -16,7 +16,7 @@ export const CurrentPlayersList = ({
         overflowY: "auto",
         overflowX: "hidden",
         maxHeight: "60vh",
-        maxWidth: "400px",
+        width: "100%",
       }}
     >
       {players.length === 0 && (

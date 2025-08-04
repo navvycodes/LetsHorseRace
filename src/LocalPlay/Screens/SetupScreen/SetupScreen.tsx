@@ -63,7 +63,7 @@ export const SetupScreen = () => {
         </Typography>
         <Box
           sx={{
-            maxWidth: "80%",
+            width: "80%",
             mx: "auto",
             bgcolor: "#1e1e1e",
             p: 2,
