@@ -8,15 +8,14 @@ export const Home = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
-        width: "100vw",
-        py: { xs: 4, sm: 6 },
+        minHeight: "100vh", // enough to fill the screen, but lets it grow if content needs more
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-
         textAlign: "center",
+
+        px: 2, // helps prevent horizontal overflow on small screens
       }}
     >
       <Box
@@ -93,7 +92,7 @@ export const Home = () => {
       </Typography>
       <Typography
         variant="caption"
-        sx={{ mt: 4, color: "gray", textAlign: "center" }}
+        sx={{ mt: 4, color: "gray", textAlign: "center", mb: 4 }}
       >
         This app is for entertainment purposes only. Please drink and gamble
         responsibly. Please visit our disclaimer page{" "}

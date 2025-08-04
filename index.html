@@ -1,37 +1,41 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/icons/HorseIcon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Let's Horse Race</title>
-    <style>
-      html, body, #root {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: radial-gradient(circle at center, #2C2C2C 0%, #1E1E1E 100%);
-        position: relative;
-      }
 
-      #root::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 300%;
-        height: 100%;
-        background: linear-gradient(36deg, transparent 30%, rgba(255, 255, 255, 0.04) 50%, transparent 70%);
-        pointer-events: none;
-        z-index: 1;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/icons/HorseIcon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Let's Horse Race</title>
+  <style>
+    html,
+    body,
+    #root {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      overflow-y: auto;
+      background: radial-gradient(circle at center, #2C2C2C 0%, #1E1E1E 100%);
+      position: relative;
+    }
 
-     
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    #root::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300%;
+      height: 100%;
+      background: linear-gradient(36deg, transparent 30%, rgba(255, 255, 255, 0.04) 50%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
