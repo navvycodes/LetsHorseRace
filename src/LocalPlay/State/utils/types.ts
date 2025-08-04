@@ -1,6 +1,6 @@
-export type BetType = "SHOTS" | "SIPS" | "BEERS" | "WATER";
+export type BetType = "SHOTS" | "SIPS" | "CANS" | "BEERS";
 export type Suit = "Hearts" | "Diamonds" | "Clubs" | "Spades";
-export const betTypeArray: BetType[] = ["SHOTS", "SIPS", "BEERS", "WATER"];
+export const betTypeArray: BetType[] = ["SHOTS", "SIPS", "CANS", "BEERS"];
 export const allSuitsArray: Suit[] = ["Hearts", "Diamonds", "Clubs", "Spades"];
 export type Rank =
   | "2"
@@ -31,8 +31,8 @@ export const suitIcons: Record<string, string> = {
 export const betTypeIcons: Record<BetType, string> = {
   SHOTS: "🥃",
   SIPS: "🍷",
-  BEERS: "🍺",
-  WATER: "💧",
+  CANS: "🥫",
+  BEERS: "🍻",
 };
 
 export type Card = {

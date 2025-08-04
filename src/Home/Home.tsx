@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import CloudIcon from "@mui/icons-material/Cloud";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -29,7 +29,6 @@ export const Home = () => {
           mb: 3,
         }}
       />
-
       <Typography
         sx={{
           color: "white",
@@ -41,7 +40,6 @@ export const Home = () => {
       >
         Let's Horse Race
       </Typography>
-
       <Box sx={{ width: "100%", maxWidth: 300 }}>
         <Button
           fullWidth
@@ -84,7 +82,6 @@ export const Home = () => {
           Online Play
         </Button>
       </Box>
-
       <Typography
         sx={{
           color: "#999999",
@@ -93,6 +90,14 @@ export const Home = () => {
         }}
       >
         V 1.0.0
+      </Typography>
+      <Typography
+        variant="caption"
+        sx={{ mt: 4, color: "gray", textAlign: "center" }}
+      >
+        This app is for entertainment purposes only. Please drink and gamble
+        responsibly. Please visit our disclaimer page{" "}
+        <Link to="/disclaimer">here</Link> for more information.
       </Typography>
     </Box>
   );
