@@ -49,6 +49,8 @@ export interface HorseState {
 
 export type HorseRacingGameContext = {
   players: PlayerRecord[];
+  autoPlay: boolean;
+  autoPlayInterval: number;
   currentCard: Card | null;
   currentLegCard: Card | null;
   horseStates: HorseState;
@@ -66,4 +68,6 @@ export type GameEvent =
   | { type: "RESTART_RACE" }
   | { type: "BACK_TO_SETUP" }
   | { type: "START_RACE" }
+  | { type: "TOGGLE_AUTOPLAY" }
+  | { type: "SET_AUTOPLAY_INTERVAL"; value: number }
   | { type: "FLIP_CARD" };

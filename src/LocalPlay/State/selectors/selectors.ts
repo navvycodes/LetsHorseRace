@@ -60,3 +60,19 @@ export const selectMinHorsePosition = ({
 }): number => {
   return context.minHorsePosition;
 };
+
+export const selectAutoPlay = ({
+  context,
+}: {
+  context: HorseRacingGameContext;
+}): boolean => {
+  return context.autoPlay;
+};
+
+export const selectAutoPlayInterval = ({
+  context,
+}: {
+  context: HorseRacingGameContext;
+}): number | undefined => {
+  return context.autoPlayInterval;
+};

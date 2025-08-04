@@ -1,10 +1,12 @@
 import { Box } from "@mui/material";
 import { useCurrentCard } from "../../State/hooks/useCurrentCard";
-import { useFlipCard } from "../../State/hooks/useFlipCard";
 
-export const DeckButton = () => {
+export const DeckButton = ({
+  handleCardClick,
+}: {
+  handleCardClick: () => void;
+}) => {
   const currentCard = useCurrentCard();
-  const flipCard = useFlipCard();
   return (
     <Box
       sx={{
@@ -15,7 +17,7 @@ export const DeckButton = () => {
       }}
     >
       <Box
-        onClick={flipCard}
+        onClick={handleCardClick}
         sx={{
           width: 140,
           height: 200,

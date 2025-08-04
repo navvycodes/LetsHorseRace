@@ -60,6 +60,20 @@ export const HorseRacingLocalStateMachine = setup({
         return context.players.filter((_, i) => i !== index);
       },
     }),
+    setAutoPlayInterval: assign({
+      autoPlayInterval: ({ context, event }) => {
+        if (event.type !== "SET_AUTOPLAY_INTERVAL")
+          return context.autoPlayInterval;
+        if (typeof event.value !== "number" || event.value <= 0) {
+          console.warn("Invalid autoplay interval value:", event.value);
+          return context.autoPlayInterval;
+        }
+        return event.value;
+      },
+    }),
+    toggleAutoPlay: assign({
+      autoPlay: ({ context }) => !context.autoPlay,
+    }),
     updatePlayer: assign({
       players: ({ context, event }) => {
         if (event.type !== "UPDATE_PLAYER") return context.players;
@@ -158,6 +172,8 @@ export const HorseRacingLocalStateMachine = setup({
     players: [],
     currentCard: null,
     currentLegCard: null,
+    autoPlay: false,
+    autoPlayInterval: 1200,
     horseStates: {
       Hearts: 0,
       Spades: 0,
@@ -191,6 +207,14 @@ export const HorseRacingLocalStateMachine = setup({
     racing: {
       entry: ["resetRace", "shuffleDeckAndDeal"],
       initial: "racing",
+      on: {
+        TOGGLE_AUTOPLAY: {
+          actions: "toggleAutoPlay",
+        },
+        SET_AUTOPLAY_INTERVAL: {
+          actions: "setAutoPlayInterval",
+        },
+      },
       states: {
         racing: {
           on: {
@@ -200,7 +224,6 @@ export const HorseRacingLocalStateMachine = setup({
             },
           },
         },
-
         checkLeg: {
           always: [
             {
