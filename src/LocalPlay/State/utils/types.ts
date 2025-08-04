@@ -63,6 +63,7 @@ export type GameEvent =
   | { type: "ADD_PLAYER"; player: PlayerRecord }
   | { type: "REMOVE_PLAYER"; index: number }
   | { type: "UPDATE_PLAYER"; index: number; player: PlayerRecord }
+  | { type: "RESTART_RACE" }
+  | { type: "BACK_TO_SETUP" }
   | { type: "START_RACE" }
-  | { type: "FLIP_CARD" }
-  | { type: "RESTART" };
+  | { type: "FLIP_CARD" };

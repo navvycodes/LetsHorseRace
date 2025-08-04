@@ -83,6 +83,19 @@ export const HorseRacingLocalStateMachine = setup({
         return updatedPlayers;
       },
     }),
+    resetRace: assign({
+      currentCard: null,
+      currentLegCard: null,
+      horseStates: {
+        Hearts: 0,
+        Spades: 0,
+        Clubs: 0,
+        Diamonds: 0,
+      },
+      currentLeg: 0,
+      maxHorsePosition: 8,
+      minHorsePosition: 1,
+    }),
     addPlayer: assign({
       players: ({ context, event }) => {
         if (event.type !== "ADD_PLAYER") return context.players;
@@ -107,7 +120,6 @@ export const HorseRacingLocalStateMachine = setup({
       return {
         deck,
         legs,
-        currentLeg: 0,
       };
     }),
   },
@@ -160,7 +172,6 @@ export const HorseRacingLocalStateMachine = setup({
   },
   states: {
     setup: {
-      entry: "shuffleDeckAndDeal",
       on: {
         UPDATE_PLAYER: {
           actions: "updatePlayer",
@@ -178,7 +189,7 @@ export const HorseRacingLocalStateMachine = setup({
       },
     },
     racing: {
-      entry: [],
+      entry: ["resetRace", "shuffleDeckAndDeal"],
       initial: "racing",
       states: {
         racing: {
@@ -218,7 +229,10 @@ export const HorseRacingLocalStateMachine = setup({
     },
     results: {
       on: {
-        RESTART: {
+        RESTART_RACE: {
+          target: "racing",
+        },
+        BACK_TO_SETUP: {
           target: "setup",
         },
       },

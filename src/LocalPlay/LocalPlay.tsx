@@ -3,6 +3,7 @@ import { RacingScreen } from "./Screens/RacingScreen/RacingScreen";
 import { SetupScreen } from "./Screens/SetupScreen/SetupScreen";
 import { useCurrentState } from "./State/hooks/useCurrentState";
 import { HorseRacingStateProvider } from "./State/HorseRacingLocalContextProvider";
+import { ResultsScreen } from "./Screens/ResultsScreen/ResultsScreen";
 
 const LocalPlay = () => {
   const currentState = useCurrentState();
@@ -10,6 +11,8 @@ const LocalPlay = () => {
     return <SetupScreen />;
   } else if (typeof currentState === "object" && "racing" in currentState) {
     return <RacingScreen />;
+  } else if (currentState === "results") {
+    return <ResultsScreen />;
   }
   return (
     <Box

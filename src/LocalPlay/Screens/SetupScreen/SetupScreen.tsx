@@ -132,7 +132,7 @@ export const SetupScreen = () => {
             },
           }}
         >
-          ➕ Add Player
+          Add Player
         </Button>
 
         <Button
