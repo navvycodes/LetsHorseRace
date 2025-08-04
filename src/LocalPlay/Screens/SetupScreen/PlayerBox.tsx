@@ -21,14 +21,17 @@ export const PlayerBox = ({
         mb: 1,
         flexShrink: 1,
         borderRadius: 2,
+        maxWidth: "400px",
         backgroundColor: "#2F2F2F", // slightly lighter than background
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.4)", // subtle shadow
         border: "1px solid #3A3A3A", // soft border for definition
         color: "#F0F0F0", // light text for readability
       }}
     >
-      <Stack>
-        <Typography> {player.playerName} </Typography>
+      <Stack maxWidth={"60%"}>
+        <Typography textOverflow="ellipsis" noWrap={true} overflow={"hidden"}>
+          {player.playerName}
+        </Typography>
         <Typography
           sx={{
             color: "#B0B0B0",

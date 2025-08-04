@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { useAddNewPlayer } from "../../State/hooks/useAddNewPlayer";
 import { usePlayers } from "../../State/hooks/usePlayers";
@@ -14,12 +14,9 @@ export const SetupScreen = () => {
   const addNewPlayer = useAddNewPlayer();
   const removePlayer = useRemovePlayer();
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const handleAddPlayer = (player: PlayerRecord) => {
     addNewPlayer(player);
     handleClose();
@@ -29,51 +26,89 @@ export const SetupScreen = () => {
   };
 
   return (
-    <>
-      <Stack
+    <Box
+      sx={{
+        minHeight: "100vh",
+        color: "#F0F0F0",
+        display: "flex",
+        flexDirection: "column",
+        paddingBottom: "80px",
+      }}
+    >
+      {/* Top Title */}
+      <Typography
+        variant="h4"
+        align="center"
         sx={{
-          justifyContent: "center",
-          display: "flex",
-          alignSelf: "center",
-          padding: 6,
+          fontWeight: "bold",
+          mt: 4,
+          mb: 2,
+          textShadow: "1px 1px 2px rgba(0,0,0,0.6)",
         }}
       >
-        <Typography
-          variant="h5"
-          sx={{
-            color: "#F0F0F0",
-            mb: 1,
-          }}
-        >
+        Let's Horse Race (Local Play)
+      </Typography>
+
+      {/* Player List Section */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          flexGrow: 1,
+        }}
+      >
+        <Typography variant="h6" sx={{ color: "#CCCCCC", mb: 1 }}>
           Players
         </Typography>
-        <CurrentPlayersList
-          players={players}
-          handleRemovePlayer={handleRemovePlayer}
-        />
+        <Box
+          sx={{
+            maxWidth: "80%",
+            mx: "auto",
+            bgcolor: "#1e1e1e",
+            p: 2,
+            borderRadius: 2,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.5)",
+          }}
+        >
+          <CurrentPlayersList
+            players={players}
+            handleRemovePlayer={handleRemovePlayer}
+          />
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          py: 2,
+          backgroundColor: "#1c1c1c",
+          borderTop: "1px solid #333",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
+          zIndex: 100,
+        }}
+      >
         <Button
           variant="contained"
-          fullWidth
+          onClick={handleClickOpen}
           sx={{
-            mb: 2,
-            mt: 2,
-            py: 1.5,
-            fontWeight: "medium",
-            fontSize: "1rem",
-            backgroundColor: "#3A3A3A", // dark gray button
-            color: "#7b7b7bff", // light text
+            backgroundColor: "#444",
+            color: "#ddd",
             textTransform: "none",
+            fontWeight: 500,
             borderRadius: 2,
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.4)",
+            px: 3,
+            py: 1.5,
             "&:hover": {
-              backgroundColor: "#4A4A4A", // subtle hover
-            },
-            "&:disabled": {
-              backgroundColor: "#2A2A2A",
-              color: "#777",
+              backgroundColor: "#555",
             },
           }}
-          onClick={handleClickOpen}
         >
           ➕ Add Player
         </Button>
@@ -81,19 +116,25 @@ export const SetupScreen = () => {
         <Button
           variant="contained"
           color="primary"
-          sx={{ mb: 2 }}
-          onClick={() => {
-            startRace();
+          disabled={players.length < 1}
+          onClick={startRace}
+          sx={{
+            textTransform: "none",
+            fontWeight: 500,
+            borderRadius: 2,
+            px: 3,
+            py: 1.5,
           }}
         >
-          Start Game
+          🚀 Start Game
         </Button>
-      </Stack>
+      </Box>
+
       <AddPlayerDialog
         open={open}
         handleClose={handleClose}
         onAddPlayer={handleAddPlayer}
       />
-    </>
+    </Box>
   );
 };
