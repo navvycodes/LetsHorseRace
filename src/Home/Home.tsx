@@ -4,19 +4,20 @@ import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import { Link, useNavigate } from "react-router";
 import { AdBanner } from "../Ads/AdBanner";
 
+// ... existing imports ...
+
 export const Home = () => {
   const navigate = useNavigate();
   return (
     <Box
       sx={{
-        minHeight: "100vh", // enough to fill the screen, but lets it grow if content needs more
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-
-        px: 2, // helps prevent horizontal overflow on small screens
+        px: 2,
       }}
     >
       <Box
@@ -40,6 +41,22 @@ export const Home = () => {
       >
         Let's Horse Race
       </Typography>
+
+      {/* ✅ NEW descriptive content here */}
+      <Typography
+        sx={{
+          color: "#DDDDDD",
+          maxWidth: 600,
+          mb: 4,
+          fontSize: { xs: "1rem", sm: "1.1rem" },
+        }}
+      >
+        Welcome to Let's Horse Race – a lighthearted multiplayer horse racing
+        game you can play locally or online. Race your friends side-by-side on
+        one device, or challenge them remotely in the upcoming online mode.
+        Simple, fast, and fun — no signups or downloads needed.
+      </Typography>
+
       <Box sx={{ width: "100%", maxWidth: 300 }}>
         <Button
           fullWidth
@@ -82,6 +99,7 @@ export const Home = () => {
           Online Play
         </Button>
       </Box>
+
       <Typography
         sx={{
           color: "#999999",
@@ -95,6 +113,7 @@ export const Home = () => {
       <Box sx={{ mt: 4, px: 2 }}>
         <AdBanner />
       </Box>
+
       <Typography
         variant="caption"
         sx={{ mt: 4, color: "gray", textAlign: "center", mb: 4 }}
